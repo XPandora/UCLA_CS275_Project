@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Boid
+      name: FishBase
     second: {fileID: 2100000, guid: ee52bb0bbda6e4eb8a7251c7fd884b54, type: 2}
   materials:
     importMaterials: 1

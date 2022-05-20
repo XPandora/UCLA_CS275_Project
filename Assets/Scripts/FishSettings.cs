@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class BoidSettings : ScriptableObject {
+public class FishSettings : ScriptableObject {
     // Settings
     public float minSpeed = 2;
     public float maxSpeed = 5;

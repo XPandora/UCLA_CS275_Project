@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6349151928875962174}
   - component: {fileID: 2931604500597588581}
   m_Layer: 8
-  m_Name: Boid
+  m_Name: FishBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
       propertyPath: m_Name
-      value: ConeBoid2
+      value: ConeFish
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}

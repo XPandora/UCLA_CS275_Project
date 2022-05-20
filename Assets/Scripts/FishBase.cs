@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boid : MonoBehaviour {
+public class FishBase : MonoBehaviour {
 
-    BoidSettings settings;
+    FishSettings settings;
 
     // State
     [HideInInspector]
@@ -34,7 +34,7 @@ public class Boid : MonoBehaviour {
         cachedTransform = transform;
     }
 
-    public void Initialize (BoidSettings settings, Transform target) {
+    public void Initialize (FishSettings settings, Transform target) {
         this.target = target;
         this.settings = settings;
 
@@ -51,7 +51,7 @@ public class Boid : MonoBehaviour {
         }
     }
 
-    public void UpdateBoid () {
+    public void SelfUpdate () {
         Vector3 acceleration = Vector3.zero;
 
         if (target != null) {
@@ -100,7 +100,7 @@ public class Boid : MonoBehaviour {
     }
 
     Vector3 ObstacleRays () {
-        Vector3[] rayDirections = BoidHelper.directions;
+        Vector3[] rayDirections = PerceptionHelper.directions;
 
         for (int i = 0; i < rayDirections.Length; i++) {
             Vector3 dir = cachedTransform.TransformDirection (rayDirections[i]);
