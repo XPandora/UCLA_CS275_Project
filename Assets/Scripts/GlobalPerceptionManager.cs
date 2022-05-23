@@ -10,15 +10,16 @@ public class GlobalPerceptionManager : MonoBehaviour {
     public ComputeShader compute;
     FishBase[] fishes;
 
-    void Start () {
-        fishes = FindObjectsOfType<FishBase> ();
+    void Start()
+    {
+        fishes = FindObjectsOfType<FishBase>();
         foreach (FishBase b in fishes) {
-            b.Initialize (settings, null);
+            b.Initialize(settings, null);
         }
-
     }
 
-    void Update () {
+    void Update()
+    {
         if (fishes != null) {
 
             int numFishes = fishes.Length;
@@ -29,18 +30,18 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishDat[i].direction = fishes[i].forward;
             }
 
-            var fishDatBuffer = new ComputeBuffer (numFishes, FishDataBuffer.Size);
-            fishDatBuffer.SetData (fishDat);
+            var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
+            fishDatBuffer.SetData(fishDat);
 
-            compute.SetBuffer (0, "fishDatBuffer", fishDatBuffer);
-            compute.SetInt ("numFishes", fishes.Length);
-            compute.SetFloat ("viewRadius", settings.perceptionRadius);
-            compute.SetFloat ("avoidRadius", settings.avoidanceRadius);
+            compute.SetBuffer(0, "fishDatBuffer", fishDatBuffer);
+            compute.SetInt("numFishes", fishes.Length);
+            compute.SetFloat("viewRadius", settings.perceptionRadius);
+            compute.SetFloat("avoidRadius", settings.avoidanceRadius);
 
-            int threadGroups = Mathf.CeilToInt (numFishes / (float) threadGroupSize);
-            compute.Dispatch (0, threadGroups, 1, 1);
+            int threadGroups = Mathf.CeilToInt(numFishes / (float) threadGroupSize);
+            compute.Dispatch(0, threadGroups, 1, 1);
 
-            fishDatBuffer.GetData (fishDat);
+            fishDatBuffer.GetData(fishDat);
 
             for (int i = 0; i < fishes.Length; i++) {
                 fishes[i].avgFlockHeading = fishDat[i].flockHeading;
@@ -48,10 +49,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].avgAvoidanceHeading = fishDat[i].avoidanceHeading;
                 fishes[i].numPerceivedFlockmates = fishDat[i].numFlockmates;
 
-                fishes[i].SelfUpdate ();
+                fishes [i]
+                    .SelfUpdate();
             }
 
-            fishDatBuffer.Release ();
+            fishDatBuffer.Release();
         }
     }
 
@@ -64,9 +66,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public Vector3 avoidanceHeading;
         public int numFlockmates;
 
-        public static int Size {
-            get {
-                return sizeof (float) * 3 * 5 + sizeof (int);
+        public static int Size
+        {
+            get
+            {
+                return sizeof(float) * 3 * 5 + sizeof(int);
             }
         }
     }
