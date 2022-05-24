@@ -20,7 +20,8 @@ public class FishBase : MonoBehaviour {
     [HideInInspector]
     public Vector3 forward;
     Vector3 velocity;
-    Vector3 mentalStates; // H L F
+    float H, L, F, Fmax;
+    float deltaTH, deltaTL, foodConsumed;
     List<intention> memories;
     intention It; // current intention
 
@@ -79,12 +80,30 @@ public class FishBase : MonoBehaviour {
         case intention.wander:
             acceleration = DefaultBoidWander();
             break;
-        // TODO cases for every other Its and the corresponding behavior
-        // wrappers
+        // TODO cases for every other Its and the corresponding behavior wrappers
+        // case intention.avoid:
+        //     acceleration = DefaultBoidWander();
+        //     break;
+        // case intention.eat:
+        //     acceleration = DefaultBoidWander();
+        //     break;
+        // case intention.mate:
+        //     acceleration = DefaultBoidWander();
+        //     break;
+        // case intention.escape:
+        //     acceleration = DefaultBoidWander();
+        //     break;
+        // case intention.school:
+        //     acceleration = DefaultBoidWander();
+        //     break;
+        // case intention.leave:
+        //     acceleration = DefaultBoidWander();
+        //     break;
         default:
             acceleration = DefaultBoidWander();
             break;
         }
+        // DONE cases for every other Its and the corresponding behavior wrappers
         // move
         velocity += acceleration * Time.deltaTime;
         float speed = velocity.magnitude;
@@ -100,12 +119,14 @@ public class FishBase : MonoBehaviour {
 
     void UpdateMentalStates()
     {
-        // TODO
+        H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / settings.appetite, 1);
+        L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
+        F = Math.Min(F, 1);
     }
 
     void IntentionGenerator()
     {
-        // TODO look at the figure 5.
+        // NOTE look at the figure 5.
         intention ItMinus = It; // backup It at last step
         bool avoid = true; // TODO refine the avoid check here
         if (avoid) {
@@ -115,8 +136,8 @@ public class FishBase : MonoBehaviour {
             }
         }
         else {
-            if (mentalStates[2] > f0) {
-                if (mentalStates[2] > f1) {
+            if (F > settings.f0) {
+                if (Fmax > settings.f1) {
                     It = intention.escape;
                 }
                 else {
@@ -128,9 +149,7 @@ public class FishBase : MonoBehaviour {
                     It = GenerateIntentioBasedOnHabit();
                 }
                 else {
-                    intention Is = memories.RemoveAt(0); // TODO should pop 0 or pop
-                        // last? what happens to a fish
-                        // if it recovers from a danger
+                    intention Is = memories.RemoveAt(0); // TODO should pop 0 or pop last? what happens to a fish if it recovers from a danger
                     if (Is == intention.eat || Is == intention.mate) {
                         It = Is;
                     }
@@ -144,7 +163,7 @@ public class FishBase : MonoBehaviour {
 
     intention GenerateIntentioBasedOnHabit()
     {
-        // TODO be overloaded in different fishes
+        // NOTE be overloaded in different fishes
         return intention.wander;
     }
 
@@ -203,7 +222,7 @@ public class FishBase : MonoBehaviour {
     {
         return Steer() + Flock() + CollisiionAvoid();
     }
-    // TODO add more
+    // TODO add more wrappers
 
     // Other helpers
     bool IsHeadingForCollision()

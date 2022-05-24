@@ -9,16 +9,22 @@ struct FishDataBuffer {
     float3 flockCentre;
     float3 separationHeading;
     int numFlockmates;
+
+    float totFear;
+    float maxFear;
+    float threat; // 0 for prey 1 for predator
 };
 
 RWStructuredBuffer<FishDataBuffer> fishDatBuffer;
 int numFishes;
 float viewRadius;
 float avoidRadius;
+float D0 = 100;
 
 [numthreads(threadGroupSize,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
+    float tmpMaxThreat = 0;
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
@@ -33,7 +39,11 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                 if (sqrDst < avoidRadius * avoidRadius) {
                     fishDatBuffer[id.x].separationHeading -= offset / sqrDst;
                 }
+                // accumulate fear
+                fishDatBuffer[id.x].totFear += neighbor.threat * D0 / Math.Sqrt(sqrDst);
+                tmpMaxThreat = Math.Max(tmpMaxThreat, neighbor.threat * D0 / Math.Sqrt(sqrDst))
             }
         }
     }
+    fishDatBuffer[id.x].maxFear = tmpMaxThreat;
 }

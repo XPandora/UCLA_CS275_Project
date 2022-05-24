@@ -28,6 +28,9 @@ public class GlobalPerceptionManager : MonoBehaviour {
             for (int i = 0; i < fishes.Length; i++) {
                 fishDat[i].position = fishes[i].position;
                 fishDat[i].direction = fishes[i].forward;
+                fishDat[i].th = fishes[i].forward;
+
+                fishDat[i].threat = 0; // TODO how to judge if the incoming Fish class is prey (assign 0) or predator (assign 1)
             }
 
             var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
@@ -49,6 +52,9 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].avgAvoidanceHeading = fishDat[i].avoidanceHeading;
                 fishes[i].numPerceivedFlockmates = fishDat[i].numFlockmates;
 
+                fishes[i].F = fishDat[i].totFear;
+                fishes[i].Fmax = fishDat[i].maxFear;
+
                 fishes [i]
                     .SelfUpdate();
             }
@@ -66,11 +72,15 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public Vector3 avoidanceHeading;
         public int numFlockmates;
 
-        public static int Size
+        float totFear;
+        float maxFear;
+        float threat; // 0 for prey 1 for predator
+
+        public static int Size // NOTE when you changed the buffer content also change the size
         {
             get
             {
-                return sizeof(float) * 3 * 5 + sizeof(int);
+                return sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3;
             }
         }
     }
