@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-enum intention { wander,
+public enum intention { wander,
     avoid,
     eat,
     mate,
@@ -20,10 +21,10 @@ public class FishBase : MonoBehaviour {
     [HideInInspector]
     public Vector3 forward;
     Vector3 velocity;
-    float H, L, F, Fmax;
-    float deltaTH, deltaTL, foodConsumed;
-    List<intention> memories;
-    intention It; // current intention
+    public float H, L, F, Fmax;
+    public float deltaTH, deltaTL, foodConsumed;
+    public List<intention> memories;
+    public intention It; // current intention
 
     // To update:
     Vector3 acceleration;
@@ -153,7 +154,8 @@ public class FishBase : MonoBehaviour {
                     It = GenerateIntentioBasedOnHabit();
                 }
                 else {
-                    intention Is = memories.RemoveAt(0); // TODO should pop 0 or pop last? what happens to a fish if it recovers from a danger
+                    // intention Is = memories.RemoveAt(0); // TODO should pop 0 or pop last? what happens to a fish if it recovers from a danger
+                    intention Is = intention.eat;
                     if (Is == intention.eat || Is == intention.mate) {
                         It = Is;
                     }

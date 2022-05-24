@@ -7,5 +7,6 @@ public class FishPrey : FishBase {
     intention GenerateIntentioBasedOnHabit()
     {
         // TODO overload
+        return intention.wander;
     }
 }

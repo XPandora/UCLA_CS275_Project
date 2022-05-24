@@ -9,6 +9,8 @@ public class Spawner : MonoBehaviour {
         Always }
 
     public FishBase prefab;
+    // public FishBase prefab; // TODO generate prey and predators
+    // public FishBase prefab;
     public float spawnRadius = 10;
     public int spawnCount = 10;
     public Color colour;
