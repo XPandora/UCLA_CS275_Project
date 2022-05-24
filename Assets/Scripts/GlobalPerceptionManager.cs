@@ -55,8 +55,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].F = fishDat[i].totFear;
                 fishes[i].Fmax = fishDat[i].maxFear;
 
-                fishes [i]
-                    .SelfUpdate();
+                fishes[i].Update();
             }
 
             fishDatBuffer.Release();

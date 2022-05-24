@@ -66,7 +66,7 @@ public class FishBase : MonoBehaviour {
         }
     }
 
-    public void SelfUpdate()
+    public void Update()
     {
         // mental states update
         UpdateMentalStates();
