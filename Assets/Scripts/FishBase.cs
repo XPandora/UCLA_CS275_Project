@@ -84,10 +84,10 @@ public class FishBase : MonoBehaviour {
         // case intention.avoid:
         //     acceleration = DefaultBoidWander();
         //     break;
-        // case intention.eat:
+        // case intention.eat: // NOTE: remember to reset the food consumed, and the deltaTH
         //     acceleration = DefaultBoidWander();
         //     break;
-        // case intention.mate:
+        // case intention.mate: // NOTE: remember to reset the and the deltaTL
         //     acceleration = DefaultBoidWander();
         //     break;
         // case intention.escape:
@@ -104,6 +104,10 @@ public class FishBase : MonoBehaviour {
             break;
         }
         // DONE cases for every other Its and the corresponding behavior wrappers
+        // accumulate deltaTs
+        deltaTH += 1;
+        deltaTL += 1;
+
         // move
         velocity += acceleration * Time.deltaTime;
         float speed = velocity.magnitude;
