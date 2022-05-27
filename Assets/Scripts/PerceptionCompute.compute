@@ -5,12 +5,11 @@ struct FishDataBuffer {
     int type; // 0: prey, 1: predator, 2: pacifist
     float3 position;
     float3 direction;
-
     float3 flockHeading;
     float3 flockCentre;
     float3 separationHeading;
+    float3 avoidanceHeading; 
     int numFlockmates;
-
     float totFear;
     float maxFear;
     float threat; // 0 for prey 1 for predator
@@ -75,6 +74,9 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                         // TODO: update focusser info
                     }
                 }
+                // accumulate fear
+                fishDatBuffer[id.x].totFear += neighbor.threat * D0 / sqrt(sqrDst);
+                tmpMaxThreat = max(tmpMaxThreat, neighbor.threat * D0 / sqrt(sqrDst));
             }
         }
     }

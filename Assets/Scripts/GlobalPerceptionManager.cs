@@ -88,6 +88,12 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].F = fishDat[i].totFear;
                 fishes[i].Fmax = fishDat[i].maxFear;
 
+
+                fishes[i].isNearNeighborFront = fishes[i].isNearNeighborFront;
+                fishes[i].isNearNeighborSide = fishes[i].isNearNeighborSide;
+                fishes[i].closestFrontPosition = fishes[0].position;
+                fishes[i].closestSidePosition = fishes[0].position; 
+
                 fishes[i].Update();
             }
 
@@ -99,12 +105,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public int type;
         public Vector3 position;
         public Vector3 direction;
-
         public Vector3 flockHeading;
         public Vector3 flockCentre;
-        public Vector3 avoidanceHeading;
+        public Vector3 separationHeading;
+        public Vector3 avoidanceHeading; 
         public int numFlockmates;
-
         public float totFear;
         public float maxFear;
         public float threat; // 0 for prey 1 for predator
@@ -112,8 +117,8 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public static int Size // NOTE when you changed the buffer content also change the size
         {
             get
-            {
-                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3;
+            { 
+                return sizeof(float) * 3 * 6 + sizeof(int) + sizeof(float) * 3;
             }
         }
     }

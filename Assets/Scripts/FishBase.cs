@@ -27,13 +27,19 @@ public class FishBase : MonoBehaviour {
     public Vector3 position;
     [HideInInspector]
     public Vector3 forward;
-    public Vector3 velocity;
-    public float H, L, F, Fmax;
-    public float deltaTH, deltaTL, foodConsumed;
+    oublic Vector3 velocity;
+    public float H = 1, L = 1, F = 1, Fmax = 1;
+    public float deltaTH= 1;
+    public float deltaTL = 1;
+    public float foodConsumed = 1;
     public List<intention> memories;
-    public intention It; // current intention
+    public intention It = intention.wander; // current intention
 
     // To update:
+    public bool isNearNeighborFront = false;
+    public bool isNearNeighborSide = false;
+    public Vector3 closestFrontPosition;
+    public Vector3 closestSidePosition; 
     public Vector3 acceleration;
     [HideInInspector]
     public Vector3 avgFlockHeading;
@@ -104,13 +110,13 @@ public class FishBase : MonoBehaviour {
             acceleration = Escape(focusser_pos);
             break;
         // case intention.school:
-        //     acceleration = DefaultBoidWander();
+        //     acceleration = Schooling();
         //     break;
         // case intention.leave:
         //     acceleration = DefaultBoidWander();
         //     break;
         default:
-            acceleration = DefaultBoidWander();
+            acceleration = Schooling();
             break;
         }
         // DONE cases for every other Its and the corresponding behavior wrappers
@@ -243,6 +249,37 @@ public class FishBase : MonoBehaviour {
         return SteerTowards(position - focusser_pos);
     }
     // TODO add more wrappers
+
+
+    Vector3 Schooling()
+    {   
+        Vector3 acceleration = Vector3.zero;
+        if (isNearNeighborFront){
+            if (isNearNeighborSide){
+                if(velocity.normalized == avgFlockHeading.normalized){
+                    // standard speed, no change
+                    return acceleration;
+                }else{
+                    acceleration = settings.targetWeight * (velocity.normalized - avgFlockHeading.normalized).normalized;
+                    return acceleration;
+                }
+            }else{
+                Vector3 target = closestSidePosition;
+                if (target != null) {
+                    Vector3 offsetToTarget = (target - position);
+                    acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
+                }
+                return acceleration;
+            }
+        }else{
+            Vector3 target = closestFrontPosition;//find the closest schoolmate in front and speed up towards it
+            if (target != null) {
+                Vector3 offsetToTarget = (target - position);
+                acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
+            }
+            return acceleration;
+        }
+    }
 
     // Other helpers
     bool IsHeadingForCollision()
