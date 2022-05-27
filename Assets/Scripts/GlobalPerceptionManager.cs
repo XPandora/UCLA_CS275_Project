@@ -12,10 +12,41 @@ public class GlobalPerceptionManager : MonoBehaviour {
 
     void Start()
     {
-        fishes = FindObjectsOfType<FishBase>();
-        foreach (FishBase b in fishes) {
+        FishPrey[] fish_preys = FindObjectsOfType<FishPrey>();
+        foreach (FishPrey b in fish_preys)
+        {
             b.Initialize(settings, null);
         }
+
+        FishPredator[] fish_predators = FindObjectsOfType<FishPredator>();
+        foreach (FishPredator b in fish_predators)
+        {
+            b.Initialize(settings, null);
+        }
+
+        FishPacifists[] fish_pacifists = FindObjectsOfType<FishPacifists>();
+        foreach (FishPacifists b in fish_pacifists)
+        {
+            b.Initialize(settings, null);
+        }
+
+        fishes = new FishBase[fish_preys.Length + fish_predators.Length + fish_pacifists.Length];
+        for (int i = 0; i < fishes.Length; i++)
+        {
+            if (i < fish_preys.Length)
+            {
+                fishes[i] = fish_preys[i];
+            }
+            else if (i < fish_preys.Length + fish_predators.Length)
+            {
+                fishes[i] = fish_predators[i - fish_preys.Length];
+            }
+            else
+            {
+                fishes[i] = fish_pacifists[i - fish_preys.Length - fish_predators.Length];
+            }
+        }
+        
     }
 
     void Update()

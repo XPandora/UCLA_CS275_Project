@@ -13,7 +13,7 @@ public enum intention { wander,
 
 public class FishBase : MonoBehaviour {
 
-    FishSettings settings;
+    public FishSettings settings;
 
     // State
     [HideInInspector]
@@ -91,9 +91,11 @@ public class FishBase : MonoBehaviour {
         // case intention.mate: // NOTE: remember to reset the and the deltaTL
         //     acceleration = DefaultBoidWander();
         //     break;
-        // case intention.escape:
-        //     acceleration = DefaultBoidWander();
-        //     break;
+        case intention.escape:
+            // TODO : modify focusser_pos when focusser is completed
+            Vector3 focusser_pos = UnityEngine.Random.insideUnitSphere;
+            acceleration = Escape(focusser_pos);
+            break;
         // case intention.school:
         //     acceleration = DefaultBoidWander();
         //     break;
@@ -227,6 +229,11 @@ public class FishBase : MonoBehaviour {
     Vector3 DefaultBoidWander()
     {
         return Steer() + Flock() + CollisiionAvoid();
+    }
+
+    Vector3 Escape(Vector3 focusser_pos)
+    {
+        return SteerTowards(position - focusser_pos);
     }
     // TODO add more wrappers
 

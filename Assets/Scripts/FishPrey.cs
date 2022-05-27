@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FishPrey : FishBase {
-    // YADI NOTE: I am not familiar with the derive in C sharp, so may be you need to add more stuff here i.e. construction overload?
+
     intention GenerateIntentioBasedOnHabit()
     {
-        // TODO overload
-        return intention.wander;
+        if (H > settings.r)
+        {
+            return intention.eat;
+        }
+        else
+        {
+            // assume preys always like schooling
+            return intention.school;
+        }
     }
 }
