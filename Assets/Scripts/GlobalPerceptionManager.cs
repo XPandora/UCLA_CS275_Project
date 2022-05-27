@@ -59,8 +59,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
             for (int i = 0; i < fishes.Length; i++) {
                 fishDat[i].position = fishes[i].position;
                 fishDat[i].direction = fishes[i].forward;
-
-                fishDat[i].threat = 0; // TODO how to judge if the incoming Fish class is prey (assign 0) or predator (assign 1)
+                fishDat[i].type = (int)fishes[i].type;
+                if (fishes[i].type == FishType.predator)
+                    fishDat[i].threat = 0;
+                else
+                    fishDat[i].threat = 1;
             }
 
             var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
@@ -93,6 +96,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
     }
 
     public struct FishDataBuffer {
+        public int type;
         public Vector3 position;
         public Vector3 direction;
 
@@ -109,7 +113,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
         {
             get
             {
-                return sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3;
+                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3;
             }
         }
     }

@@ -2,6 +2,7 @@
 static const int threadGroupSize = 1024;
 
 struct FishDataBuffer {
+    int type; // 0: prey, 1: predator, 2: pacifist
     float3 position;
     float3 direction;
 
@@ -28,20 +29,52 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
+            int neighbor_type = neighbor.type;
+            
             float3 offset = neighbor.position - fishDatBuffer[id.x].position;
             float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z;
 
+            // assume all fish types share same view radius and avoid raduis for temporary use
             if (sqrDst < viewRadius * viewRadius) {
-                fishDatBuffer[id.x].numFlockmates += 1;
-                fishDatBuffer[id.x].flockHeading += neighbor.direction;
-                fishDatBuffer[id.x].flockCentre += neighbor.position;
+                if (fishDatBuffer[id.x].type == 0) // prey
+                {
+                    if (neighbor_type == 0) // prey neighbor
+                    {
+                        fishDatBuffer[id.x].numFlockmates += 1;
+                        fishDatBuffer[id.x].flockHeading += neighbor.direction;
+                        fishDatBuffer[id.x].flockCentre += neighbor.position;
 
-                if (sqrDst < avoidRadius * avoidRadius) {
-                    fishDatBuffer[id.x].separationHeading -= offset / sqrDst;
+                        if (sqrDst < avoidRadius * avoidRadius) {
+                            fishDatBuffer[id.x].separationHeading -= offset / sqrDst;
+                        }
+                    }
+                    else if (neighbor_type == 1) // predator neighbor
+                    {
+                        // accumulate fear
+                        fishDatBuffer[id.x].totFear += neighbor.threat * D0 / sqrt(sqrDst);
+                        tmpMaxThreat = max(tmpMaxThreat, neighbor.threat * D0 / sqrt(sqrDst));
+
+                        // TODO: update focusser info
+                    }
+
+                    // no interest on pacifist neighbor
                 }
-                // accumulate fear
-                fishDatBuffer[id.x].totFear += neighbor.threat * D0 / Math.Sqrt(sqrDst);
-                tmpMaxThreat = Math.Max(tmpMaxThreat, neighbor.threat * D0 / Math.Sqrt(sqrDst))
+                else if (fishDatBuffer[id.x].type == 1) // predator
+                {
+                    // only have interest on prey neighbor
+                    if (neighbor_type == 0)
+                    {
+                        // TODO: update focusser info 
+                    }
+                }
+                else // pacifist
+                {
+                    // only have interest on pacifist neighbor
+                    if (neighbor_type == 2)
+                    {
+                        // TODO: update focusser info
+                    }
+                }
             }
         }
     }

@@ -11,23 +11,30 @@ public enum intention { wander,
     school,
     leave }
 
+public enum FishType {
+    prey=0,
+    predator=1,
+    pacifist=2
+}
+
 public class FishBase : MonoBehaviour {
 
     public FishSettings settings;
-
+    [HideInInspector]
+    public FishType type = FishType.prey;
     // State
     [HideInInspector]
     public Vector3 position;
     [HideInInspector]
     public Vector3 forward;
-    Vector3 velocity;
+    public Vector3 velocity;
     public float H, L, F, Fmax;
     public float deltaTH, deltaTL, foodConsumed;
     public List<intention> memories;
     public intention It; // current intention
 
     // To update:
-    Vector3 acceleration;
+    public Vector3 acceleration;
     [HideInInspector]
     public Vector3 avgFlockHeading;
     [HideInInspector]
@@ -38,9 +45,9 @@ public class FishBase : MonoBehaviour {
     public int numPerceivedFlockmates;
 
     // Cached
-    Material material;
-    Transform cachedTransform;
-    Transform target;
+    public Material material;
+    public Transform cachedTransform;
+    public Transform target;
 
     void Awake()
     {
@@ -82,9 +89,9 @@ public class FishBase : MonoBehaviour {
             acceleration = DefaultBoidWander();
             break;
         // TODO cases for every other Its and the corresponding behavior wrappers
-        // case intention.avoid:
-        //     acceleration = DefaultBoidWander();
-        //     break;
+        case intention.avoid:
+            acceleration = CollisiionAvoid();
+            break;
         // case intention.eat: // NOTE: remember to reset the food consumed, and the deltaTH
         //     acceleration = DefaultBoidWander();
         //     break;
@@ -135,7 +142,7 @@ public class FishBase : MonoBehaviour {
     {
         // NOTE look at the figure 5.
         intention ItMinus = It; // backup It at last step
-        bool avoid = true; // TODO refine the avoid check here
+        bool avoid = IsHeadingForCollision(); // TODO refine the avoid check here
         if (avoid) {
             It = intention.avoid;
             if (ItMinus != intention.avoid) {
