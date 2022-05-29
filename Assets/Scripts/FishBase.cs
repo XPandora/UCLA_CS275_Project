@@ -27,7 +27,7 @@ public class FishBase : MonoBehaviour {
     public Vector3 position;
     [HideInInspector]
     public Vector3 forward;
-    oublic Vector3 velocity;
+    Vector3 velocity;
     public float H = 1, L = 1, F = 1, Fmax = 1;
     public float deltaTH= 1;
     public float deltaTL = 1;

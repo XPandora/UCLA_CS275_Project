@@ -64,6 +64,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
                     fishDat[i].threat = 0;
                 else
                     fishDat[i].threat = 1;
+                fishDat[i].bodyLen = 1;
             }
 
             var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
