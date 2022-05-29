@@ -1,4 +1,5 @@
 ﻿#pragma kernel CSMain
+#define FLT_MAX 3.402823466e+38
 static const int threadGroupSize = 1024;
 
 struct FishDataBuffer {
@@ -8,10 +9,13 @@ struct FishDataBuffer {
     float3 flockCentre;
     float3 separationHeading;
     float3 avoidanceHeading; 
+    float3 closestPosition;
     int numFlockmates;
+    int numNeighborNear;
     float totFear;
     float maxFear;
     float threat; // 0 for prey 1 for predator
+    float bodyLen;
 };
 
 RWStructuredBuffer<FishDataBuffer> fishDatBuffer;
@@ -24,11 +28,24 @@ float D0 = 100;
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     float tmpMaxThreat = 0;
+    // float count = 0;
+    float minDis = FLT_MAX;
+    int minIdx = -1;
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
+        int count = 0;
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
             float3 offset = neighbor.position - fishDatBuffer[id.x].position;
             float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z;
+
+            if (sqrDst < neighbor.bodyLen) {
+                count += 1;
+            }
+
+            if (sqrDst < minDis) {
+                minIdx = idxNeighbor;
+                minDis = sqrDst;
+            }   
 
             if (sqrDst < viewRadius * viewRadius) {
                 fishDatBuffer[id.x].numFlockmates += 1;
@@ -43,6 +60,9 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                 tmpMaxThreat = max(tmpMaxThreat, neighbor.threat * D0 / sqrt(sqrDst));
             }
         }
+        fishDatBuffer[id.x].numNeighborNear = count;
+        
     }
     fishDatBuffer[id.x].maxFear = tmpMaxThreat;
+    fishDatBuffer[id.x].closestPosition = fishDatBuffer[minIdx].position;
 }

@@ -25,14 +25,17 @@ public class FishBase : MonoBehaviour {
     public float deltaTH= 1;
     public float deltaTL = 1;
     public float foodConsumed = 1;
+    // public float bodyLen = 1;
     public List<intention> memories;
     public intention It = intention.wander; // current intention
 
     // To update:
-    public bool isNearNeighborFront = false;
-    public bool isNearNeighborSide = false;
-    public Vector3 closestFrontPosition;
-    public Vector3 closestSidePosition; 
+    // public bool isNearNeighborFront = false;
+    // public bool isNearNeighborSide = false;
+    public int numNeighborNear;
+    // public Vector3 closestFrontPosition;
+    // public Vector3 closestSidePosition; 
+    public Vector3 closestPosition; 
     Vector3 acceleration;
     [HideInInspector]
     public Vector3 avgFlockHeading;
@@ -240,31 +243,25 @@ public class FishBase : MonoBehaviour {
     Vector3 Schooling()
     {   
         Vector3 acceleration = Vector3.zero;
-        if (isNearNeighborFront){
-            if (isNearNeighborSide){
-                if(velocity.normalized == avgFlockHeading.normalized){
-                    // standard speed, no change
-                    return acceleration;
-                }else{
-                    acceleration = settings.targetWeight * (velocity.normalized - avgFlockHeading.normalized).normalized;
-                    return acceleration;
-                }
+        if (numNeighborNear >= 2){
+            if(velocity.normalized == avgFlockHeading.normalized){
+                // standard speed, no change
+                return acceleration;
             }else{
-                Vector3 target = closestSidePosition;
-                if (target != null) {
-                    Vector3 offsetToTarget = (target - position);
-                    acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
-                }
+                //make turn to general orientation of neighbors
+                acceleration = settings.targetWeight * (velocity.normalized - avgFlockHeading.normalized).normalized;
                 return acceleration;
             }
         }else{
-            Vector3 target = closestFrontPosition;//find the closest schoolmate in front and speed up towards it
+            //find closest, turn to it
+            Vector3 target = closestPosition;
             if (target != null) {
                 Vector3 offsetToTarget = (target - position);
                 acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
             }
             return acceleration;
         }
+
     }
 
     // Other helpers
