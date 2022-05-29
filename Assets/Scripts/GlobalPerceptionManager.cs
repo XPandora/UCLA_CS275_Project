@@ -83,16 +83,12 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].avgFlockHeading = fishDat[i].flockHeading;
                 fishes[i].centreOfFlockmates = fishDat[i].flockCentre;
                 fishes[i].avgAvoidanceHeading = fishDat[i].avoidanceHeading;
-                fishes[i].numPerceivedFlockmates = fishDat[i].numFlockmates;
+                fishes[i].numPerceivedFlockmates = fishDat[i].numFlockmates;  
+                fishes[i].closestPosition = fishDat[i].closestPosition; 
+                fishes[i].numNeighborNear = fishDat[i].numNeighborNear; 
 
                 fishes[i].F = fishDat[i].totFear;
                 fishes[i].Fmax = fishDat[i].maxFear;
-
-
-                fishes[i].isNearNeighborFront = fishes[i].isNearNeighborFront;
-                fishes[i].isNearNeighborSide = fishes[i].isNearNeighborSide;
-                fishes[i].closestFrontPosition = fishes[0].position;
-                fishes[i].closestSidePosition = fishes[0].position; 
 
                 fishes[i].Update();
             }
@@ -109,16 +105,18 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public Vector3 flockCentre;
         public Vector3 separationHeading;
         public Vector3 avoidanceHeading; 
+        public Vector3 closestPosition;
         public int numFlockmates;
+        public int numNeighborNear;
         public float totFear;
         public float maxFear;
         public float threat; // 0 for prey 1 for predator
-
+        public float bodyLen;
         public static int Size // NOTE when you changed the buffer content also change the size
         {
             get
-            { 
-                return sizeof(float) * 3 * 6 + sizeof(int) + sizeof(float) * 3;
+            {
+                return sizeof(float) * 3 * 7 + sizeof(int) * 2 + sizeof(float) * 4;
             }
         }
     }
