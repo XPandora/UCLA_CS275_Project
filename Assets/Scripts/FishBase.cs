@@ -103,9 +103,9 @@ public class FishBase : MonoBehaviour {
             Vector3 focusser_pos = UnityEngine.Random.insideUnitSphere;
             acceleration = Escape(focusser_pos);
             break;
-        // case intention.school:
-        //     acceleration = DefaultBoidWander();
-        //     break;
+        case intention.school:
+            acceleration = Flock();
+            break;
         // case intention.leave:
         //     acceleration = DefaultBoidWander();
         //     break;
