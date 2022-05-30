@@ -19,7 +19,11 @@ public class FishPredator : FishBase {
 
     intention GenerateIntentioBasedOnHabit()
     {
-        // TODO overload
-        return intention.wander;
+        // hunger H, libido L, and fear F 
+        if (H > settings.r){
+            return intention.eat;
+        }else{
+            return intention.wander;
+        }
     }
 }
