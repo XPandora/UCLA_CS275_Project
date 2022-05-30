@@ -44,16 +44,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53657e503d7a4738b0a9fa634fc1b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapIndex: -1
+  settings: {fileID: 11400000, guid: fd4bc51c395304add92e7ac263cc6d3f, type: 2}
+  type: 0
   position: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
-  id: 0
+  velocity: {x: 0, y: 0, z: 0}
+  H: 0
+  L: 0
+  F: 0
+  Fmax: 0
+  deltaTH: 0
+  deltaTL: 0
+  foodConsumed: 0
+  memories: 
+  It: 0
+  acceleration: {x: 0, y: 0, z: 0}
   avgFlockHeading: {x: 0, y: 0, z: 0}
   avgAvoidanceHeading: {x: 0, y: 0, z: 0}
   centreOfFlockmates: {x: 0, y: 0, z: 0}
-  colourIndex: 0
-  neighbourColourIndices: 
   numPerceivedFlockmates: 0
+  material: {fileID: 0}
+  cachedTransform: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1001 &4154384415608217699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,15 +73,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6349151928875962174}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
-      propertyPath: m_Name
-      value: ConeFish
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_LocalScale.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.17999995
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.15999994
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
@@ -88,6 +110,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.7071068
       objectReference: {fileID: 0}
@@ -99,16 +126,6 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
@@ -126,24 +143,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.17999995
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 09cea7df0de2f4a8e9685c65efc5715d,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.15999994
-      objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 09cea7df0de2f4a8e9685c65efc5715d,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+        type: 3}
+      propertyPath: m_Name
+      value: ConeFish
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 09cea7df0de2f4a8e9685c65efc5715d,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

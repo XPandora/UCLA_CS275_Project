@@ -64,7 +64,7 @@ MonoBehaviour:
   avgAvoidanceHeading: {x: 0, y: 0, z: 0}
   centreOfFlockmates: {x: 0, y: 0, z: 0}
   numPerceivedFlockmates: 0
-  material: {fileID: 2100000, guid: 3761d4e5cdb9e4d96be64b4aa0999d07, type: 2}
+  material: {fileID: 0}
   cachedTransform: {fileID: 0}
   target: {fileID: 0}
 --- !u!1001 &1422585266430995458

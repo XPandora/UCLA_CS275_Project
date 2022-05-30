@@ -20,6 +20,10 @@ public class FishPacifists : FishBase {
     intention GenerateIntentioBasedOnHabit()
     {
         // TODO overload
-        return intention.wander;
+        if (H > settings.r){
+            return intention.eat;
+        }else{
+            return intention.mate;
+        }
     }
 }

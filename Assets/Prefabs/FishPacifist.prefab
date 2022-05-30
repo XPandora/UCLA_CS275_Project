@@ -10,8 +10,13 @@ PrefabInstance:
     - target: {fileID: 4115476135907606149, guid: a68eabc10bd1b4dcaa03efa0e2052ddb,
         type: 3}
       propertyPath: m_Name
-      value: FishPrey
+      value: FishPacifist
       objectReference: {fileID: 0}
+    - target: {fileID: 5961197486103219638, guid: a68eabc10bd1b4dcaa03efa0e2052ddb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d604f35e79711cc42a1e6e23c5b7e102, type: 2}
     - target: {fileID: 6349151928875962174, guid: a68eabc10bd1b4dcaa03efa0e2052ddb,
         type: 3}
       propertyPath: m_RootOrder
@@ -76,7 +81,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 82710550646289350}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6731459949535502357
+--- !u!114 &9027103554850730326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +90,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4051202763846864195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08619a2dba474464080030d303b3d865, type: 3}
+  m_Script: {fileID: 11500000, guid: a41173ba9943e41cb80871c173a64ecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: fd4bc51c395304add92e7ac263cc6d3f, type: 2}
