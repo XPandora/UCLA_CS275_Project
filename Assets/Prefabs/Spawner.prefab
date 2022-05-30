@@ -47,7 +47,8 @@ MonoBehaviour:
     type: 3}
   predator_prefab: {fileID: 3783318483934614430, guid: 5d36c84da53d74e1ca647548b1c47c61,
     type: 3}
-  pacifist_prefab: {fileID: 0}
+  pacifist_prefab: {fileID: 9027103554850730326, guid: 3a7d0018f03069045b8f40c8e6a0c305,
+    type: 3}
   spawnRadius: 4
   preySpawnCount: 10
   predatorSpawnCount: 0

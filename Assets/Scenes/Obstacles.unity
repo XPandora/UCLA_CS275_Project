@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1984,7 +1984,7 @@ PrefabInstance:
         type: 3}
       propertyPath: prey_prefab
       value: 
-      objectReference: {fileID: 6731459949535502357, guid: 7d9593063c80d4ecbad746252006b5f8,
+      objectReference: {fileID: 6731459949535502357, guid: 1f5422dd53c2d8545937dbb992a8fa0f,
         type: 3}
     - target: {fileID: 3559297176007848096, guid: 4cde6ba5a87074e8a973d577574f33c1,
         type: 3}
