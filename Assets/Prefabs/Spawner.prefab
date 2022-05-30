@@ -48,11 +48,11 @@ MonoBehaviour:
     type: 3}
   predator_prefab: {fileID: -2332149718283687065, guid: 2474b6076b968ae4fa7710d57058aa6c,
     type: 3}
-  pacifist_prefab: {fileID: 8810228314540087352, guid: dfa055d333424cf4baa15136c03e8151,
+  pacifist_prefab: {fileID: 5741529011741870525, guid: dfa055d333424cf4baa15136c03e8151,
     type: 3}
   spawnRadius: 4
-  preySpawnCount: 30
-  predatorSpawnCount: 3
-  pacifistSpawnCount: 50
+  preySpawnCount: 3
+  predatorSpawnCount: 0
+  pacifistSpawnCount: 0
   colour: {r: 1, g: 1, b: 1, a: 1}
   showSpawnRegion: 2
