@@ -79,7 +79,11 @@ public class FishBase : MonoBehaviour {
         // mental states update
         UpdateMentalStates();
         // decision tree for choosing an intention
-        IntentionGenerator();
+        
+        // Tim Should we use a countdown timer to generate intention ?
+        // In Update() Method, it will generate intention in each frame. OOM?
+        //IntentionGenerator();
+        
         // filtered the obtained information based on the intention
         FilterInfoByFocusser();
         // choose a certain behavior sequence TODO

@@ -43,8 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351b357d8278b4b8da32f976c630e4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2931604500597588581, guid: a68eabc10bd1b4dcaa03efa0e2052ddb, type: 3}
+  prey_prefab: {fileID: 6731459949535502357, guid: 1f5422dd53c2d8545937dbb992a8fa0f,
+    type: 3}
+  predator_prefab: {fileID: 3783318483934614430, guid: 5d36c84da53d74e1ca647548b1c47c61,
+    type: 3}
+  pacifist_prefab: {fileID: 0}
   spawnRadius: 4
-  spawnCount: 80
+  preySpawnCount: 10
+  predatorSpawnCount: 0
+  pacifistSpawnCount: 0
   colour: {r: 1, g: 1, b: 1, a: 1}
   showSpawnRegion: 2
