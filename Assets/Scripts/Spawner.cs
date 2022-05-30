@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour {
     public FishPredator predator_prefab; 
     public FishPacifists pacifist_prefab;
     public float spawnRadius = 10;
-    public int preySpawnCount = 10;
+    public int preySpawnCount = 0;
     public int predatorSpawnCount = 0;
     public int pacifistSpawnCount = 0;
     public Color colour;
@@ -36,6 +36,7 @@ public class Spawner : MonoBehaviour {
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
 
+            fish.SetColour(colour);
         }
 
         for (int i = 0; i < pacifistSpawnCount; i++) {
