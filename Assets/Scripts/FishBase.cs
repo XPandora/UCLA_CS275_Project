@@ -82,7 +82,7 @@ public class FishBase : MonoBehaviour {
         
         // Tim Should we use a countdown timer to generate intention ?
         // In Update() Method, it will generate intention in each frame. OOM?
-        //IntentionGenerator();
+        IntentionGenerator();
         
         // filtered the obtained information based on the intention
         FilterInfoByFocusser();
@@ -122,6 +122,9 @@ public class FishBase : MonoBehaviour {
         deltaTH += 1;
         deltaTL += 1;
 
+        // penalty for being out of the box
+
+
         // move
         velocity += acceleration * Time.deltaTime;
         float speed = velocity.magnitude;
@@ -150,7 +153,10 @@ public class FishBase : MonoBehaviour {
         if (avoid) {
             It = intention.avoid;
             if (ItMinus != intention.avoid) {
-                memories.Add(ItMinus);
+                if(memories.Count == 0)
+                    memories.Add(ItMinus);
+                else if (ItMinus != memories[memories.Count - 1])
+                    memories.Add(ItMinus);
             }
         }
         else {
@@ -167,8 +173,8 @@ public class FishBase : MonoBehaviour {
                     It = GenerateIntentioBasedOnHabit();
                 }
                 else {
-                    // intention Is = memories.RemoveAt(0); // TODO should pop 0 or pop last? what happens to a fish if it recovers from a danger
-                    intention Is = intention.eat;
+                    intention Is = memories[memories.Count - 1];
+                    memories.RemoveAt(memories.Count - 1);
                     if (Is == intention.eat || Is == intention.mate) {
                         It = Is;
                     }

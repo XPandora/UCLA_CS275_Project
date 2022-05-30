@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FishPredator : FishBase {
-    // YADI NOTE: I am not familiar with the derive in C sharp, so may be you need to add more stuff here i.e. construction overload?
     public void Initialize(FishSettings settings, Transform target)
     {
         this.target = target;
@@ -19,7 +18,6 @@ public class FishPredator : FishBase {
 
     intention GenerateIntentioBasedOnHabit()
     {
-        // hunger H, libido L, and fear F 
         if (H > settings.r){
             return intention.eat;
         }else{

@@ -25,7 +25,6 @@ public class FishPrey : FishBase {
         }
         else
         {
-            // assume preys always like schooling
             return intention.school;
         }
     }
