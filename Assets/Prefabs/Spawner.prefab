@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.88, y: 4.74, z: -5.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,14 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351b357d8278b4b8da32f976c630e4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prey_prefab: {fileID: 6731459949535502357, guid: 1f5422dd53c2d8545937dbb992a8fa0f,
+  prey_prefab: {fileID: -5771404875285171979, guid: 6426c0c7237feec43bf8ce22bc25ed12,
     type: 3}
-  predator_prefab: {fileID: 3783318483934614430, guid: 5d36c84da53d74e1ca647548b1c47c61,
+  predator_prefab: {fileID: 4571933678873809126, guid: 2474b6076b968ae4fa7710d57058aa6c,
     type: 3}
-  pacifist_prefab: {fileID: 0}
+  pacifist_prefab: {fileID: 8810228314540087352, guid: dfa055d333424cf4baa15136c03e8151,
+    type: 3}
   spawnRadius: 4
-  preySpawnCount: 10
-  predatorSpawnCount: 0
+  preySpawnCount: 0
+  predatorSpawnCount: 10
   pacifistSpawnCount: 0
   colour: {r: 1, g: 1, b: 1, a: 1}
   showSpawnRegion: 2
