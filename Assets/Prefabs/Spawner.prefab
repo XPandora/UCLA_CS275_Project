@@ -52,7 +52,7 @@ MonoBehaviour:
     type: 3}
   spawnRadius: 4
   preySpawnCount: 30
-  predatorSpawnCount: 1
-  pacifistSpawnCount: 0
+  predatorSpawnCount: 3
+  pacifistSpawnCount: 50
   colour: {r: 1, g: 1, b: 1, a: 1}
   showSpawnRegion: 2
