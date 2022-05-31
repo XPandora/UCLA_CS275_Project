@@ -39,7 +39,8 @@ public class FishSettings : ScriptableObject {
     public float r = .45f; // TODO: needs to tune (0 < r < 0.5); threshold of eating/mating
 
     [Header("Mating Consts")]
-    public float looping_dist = 3f;
+    public float looping_dist
+        = 3f;
     public float touching_dist = 1.5f;
     public float roundingWeight = 1;
 }

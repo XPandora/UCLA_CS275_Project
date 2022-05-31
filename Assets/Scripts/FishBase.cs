@@ -144,12 +144,12 @@ public class FishBase : MonoBehaviour {
         // TODO consider when to judge and destroy this prey
         float nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
         //Debug.Log(nearestPredatorDistance);
-        if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey){
+        if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey) {
             Debug.Log("in Drag");
-            acceleration =  DragByPredator(nearestPredatorPos);
+            acceleration = DragByPredator(nearestPredatorPos);
         }
-        
-        if(nearestPredatorDistance < settings.canEatRange && type == FishType.prey){
+
+        if (nearestPredatorDistance < settings.canEatRange && type == FishType.prey) {
             Debug.Log("in destory");
             //Destroy(gameObject);
         }
@@ -279,7 +279,7 @@ public class FishBase : MonoBehaviour {
         acceleration += SteerTowards(desiredMateDir) * settings.alignWeight;
         acceleration += SteerTowards(offset) * settings.cohesionWeight;
         acceleration += Vector3.Cross(offset, velocity).normalized * settings.roundingWeight;
-        return SteerTowards(position - focusser_pos);
+        return acceleration;
     }
 
     // Wrappers for behaviour sequences
@@ -292,7 +292,6 @@ public class FishBase : MonoBehaviour {
     {
         return SteerTowards(position - focusser_pos) * 10f;
     }
-    
 
     Vector3 DragByPredator(Vector3 predator_pos)
     {
@@ -306,22 +305,22 @@ public class FishBase : MonoBehaviour {
         Vector3 acceleration = Vector3.zero;
         Vector3 offset = focusser_pos - position;
         float dist = offset.magnitude;
-        if(dist > settings.looping_dist){
+        if (dist > settings.looping_dist) {
             // case 1: far away from female, chase (use steer)
             acceleration = SteerTowards(offset);
         }
-        else if(dist > settings.touching_dist){
+        else if (dist > settings.touching_dist) {
             // case 2: middle range from female 1. if female target not mating or target is not self->looping and wait 2. else approach
             // Tim Line316 correct_like is int can not && with bool
             // Not sure is it correct to be correct_like == 0
-            if(correct_like == 0 && (desiredMateIntention == intention.mate)){
+            if (correct_like == 0 && (desiredMateIntention == intention.mate)) {
                 acceleration = SteerTowards(offset);
             }
-            else{
+            else {
                 acceleration = Looping(focusser_pos);
             }
         }
-        else{
+        else {
             // if very close, consider it as successful mating; reset timmer and L
             acceleration = SteerTowards(offset);
             deltaTL /= 2;
@@ -338,7 +337,7 @@ public class FishBase : MonoBehaviour {
         Vector3 offset = focusser_pos - position;
         float dist = offset.magnitude;
         acceleration = SteerTowards(offset);
-        if(dist < settings.touching_dist){
+        if (dist < settings.touching_dist) {
             // if very close, consider it as successful mating; reset timmer and L
             deltaTL /= 2;
         }
@@ -355,15 +354,15 @@ public class FishBase : MonoBehaviour {
 
     Vector3 Mating(Vector3 focusser_pos)
     {
-        if(L > settings.r){
-            if(sex == FishSex.MALE){
+        if (L > settings.r) {
+            if (sex == FishSex.MALE) {
                 return MaleMating(focusser_pos);
             }
-            else{
+            else {
                 return FemaleMating(focusser_pos);
             }
         }
-        else{
+        else {
             return Leaving(focusser_pos);
         }
     }
