@@ -22,14 +22,14 @@ public class FishPacifists : FishBase {
         velocity = transform.forward * startSpeed;
     }
 
-    void UpdateMentalStates()
+    public override void UpdateMentalStates()
     {
         H = 0;
         L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
         F = 0;
     }
 
-    intention GenerateIntentioBasedOnHabit()
+    public override intention GenerateIntentioBasedOnHabit()
     {
         if (H > settings.r) {
             return intention.eat;

@@ -18,14 +18,14 @@ public class FishPredator : FishBase {
         velocity = transform.forward * startSpeed;
     }
 
-    void UpdateMentalStates()
+    public override void UpdateMentalStates()
     {
         H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / settings.appetite, 1);
         L = 0;
         F = 0;
     }
 
-    intention GenerateIntentioBasedOnHabit()
+    public override intention GenerateIntentioBasedOnHabit()
     {
         if (H > settings.r) {
             return intention.eat;

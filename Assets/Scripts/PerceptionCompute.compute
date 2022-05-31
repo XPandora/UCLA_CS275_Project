@@ -32,12 +32,13 @@ struct FishDataBuffer {
 RWStructuredBuffer<FishDataBuffer> fishDatBuffer;
 int numFishes;
 float viewRadius;
+float flockRadius;
 float avoidRadius;
-float D0 = 100;
 
 [numthreads(threadGroupSize,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
+    float D0 = 1000000;
     float tmpMaxThreat = 0;
     float tempNearestDistSqr = 1000000000.0;
 
@@ -59,7 +60,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
             if (sqrDst < viewRadius * viewRadius) {
                 if (fishDatBuffer[id.x].type == 0) // prey
                 {
-                    if (neighbor_type == 0) // prey neighbor
+                    if (neighbor_type == 0 && sqrDst < flockRadius * flockRadius) // prey neighbor
                     {
                         fishDatBuffer[id.x].numFlockmates += 1;
                         fishDatBuffer[id.x].flockHeading += neighbor.direction;
@@ -72,8 +73,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                     else if (neighbor_type == 1) // predator neighbor
                     {
                         // accumulate fear
-                        fishDatBuffer[id.x].totFear += neighbor.threat * D0 / sqrt(sqrDst);
-                        tmpMaxThreat = max(tmpMaxThreat, neighbor.threat * D0 / sqrt(sqrDst));
+                        fishDatBuffer[id.x].totFear += D0 / sqrt(sqrDst);
+                        tmpMaxThreat = max(tmpMaxThreat, D0 / sqrt(sqrDst));
 
                         // get nearestPredatorPos
                         if(sqrDst < tempNearestDistSqr){
