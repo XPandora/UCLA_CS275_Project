@@ -12,22 +12,23 @@ public enum intention { wander,
     leave }
 
 public enum FishType {
-    prey=0,
-    predator=1,
-    pacifist=2
+    prey = 0,
+    predator = 1,
+    pacifist = 2
 }
 
 public enum FishSex {
-    NA=0,
-    MALE=1,
-    FEMALE=2
+    NA = 0,
+    MALE = 1,
+    FEMALE = 2
 }
 
 public class FishBase : MonoBehaviour {
 
     public FishSettings settings;
     [HideInInspector]
-    public FishType type = FishType.prey;
+    public FishType type
+        = FishType.prey;
     // State
     [HideInInspector]
     public Vector3 position;
@@ -48,7 +49,6 @@ public class FishBase : MonoBehaviour {
     public Vector3 desiredMatePos;
     public intention desiredMateIntention;
     public Vector3 desiredMatesMatePos; // compare with self pos
-
 
     // To update:
     public Vector3 acceleration;
@@ -96,11 +96,11 @@ public class FishBase : MonoBehaviour {
         // mental states update
         UpdateMentalStates();
         // decision tree for choosing an intention
-        
+
         // Tim Should we use a countdown timer to generate intention ?
         // In Update() Method, it will generate intention in each frame. OOM?
         IntentionGenerator();
-        
+
         // filtered the obtained information based on the intention
         FilterInfoByFocusser();
         // choose a certain behavior sequence
@@ -144,7 +144,6 @@ public class FishBase : MonoBehaviour {
         // TODO consider when to judge and destroy this prey
         // TODO consider how to set predator's foodConsumed = ?, deltaTH = 0
 
-
         // move
         velocity += acceleration * Time.deltaTime;
         float speed = velocity.magnitude;
@@ -172,7 +171,7 @@ public class FishBase : MonoBehaviour {
         if (avoid) {
             It = intention.avoid;
             if (ItMinus != intention.avoid) {
-                if(memories.Count == 0)
+                if (memories.Count == 0)
                     memories.Add(ItMinus);
                 else if (ItMinus != memories[memories.Count - 1])
                     memories.Add(ItMinus);
@@ -302,7 +301,6 @@ public class FishBase : MonoBehaviour {
         // use opposite direction to its current mating target as steer
         return SteerTowards(position - focusser_pos);
     }
-
 
     // TODO add more wrappers
 

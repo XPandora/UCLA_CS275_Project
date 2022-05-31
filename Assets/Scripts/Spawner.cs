@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
         Always }
 
     public FishPrey prey_prefab;
-    public FishPredator predator_prefab; 
+    public FishPredator predator_prefab;
     public FishPacifists pacifist_prefab;
     public float spawnRadius = 10;
     public int preySpawnCount = 0;
@@ -44,10 +44,10 @@ public class Spawner : MonoBehaviour {
             FishPacifists fish = Instantiate(pacifist_prefab);
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
-            if(i < pacifistSpawnCount/2)
-            fish.sex = FishSex.MALE;
+            if (i < pacifistSpawnCount / 2)
+                fish.sex = FishSex.MALE;
             else
-            fish.sex = FishSex.FEMALE;
+                fish.sex = FishSex.FEMALE;
 
             fish.SetColour(colour);
         }

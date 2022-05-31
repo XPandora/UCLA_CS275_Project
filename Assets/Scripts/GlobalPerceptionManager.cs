@@ -13,40 +13,32 @@ public class GlobalPerceptionManager : MonoBehaviour {
     void Start()
     {
         FishPrey[] fish_preys = FindObjectsOfType<FishPrey>();
-        foreach (FishPrey b in fish_preys)
-        {
+        foreach (FishPrey b in fish_preys) {
             b.Initialize(settings, null);
         }
 
         FishPredator[] fish_predators = FindObjectsOfType<FishPredator>();
-        foreach (FishPredator b in fish_predators)
-        {
+        foreach (FishPredator b in fish_predators) {
             b.Initialize(settings, null);
         }
 
         FishPacifists[] fish_pacifists = FindObjectsOfType<FishPacifists>();
-        foreach (FishPacifists b in fish_pacifists)
-        {
+        foreach (FishPacifists b in fish_pacifists) {
             b.Initialize(settings, null);
         }
 
         fishes = new FishBase[fish_preys.Length + fish_predators.Length + fish_pacifists.Length];
-        for (int i = 0; i < fishes.Length; i++)
-        {
-            if (i < fish_preys.Length)
-            {
+        for (int i = 0; i < fishes.Length; i++) {
+            if (i < fish_preys.Length) {
                 fishes[i] = fish_preys[i];
             }
-            else if (i < fish_preys.Length + fish_predators.Length)
-            {
+            else if (i < fish_preys.Length + fish_predators.Length) {
                 fishes[i] = fish_predators[i - fish_preys.Length];
             }
-            else
-            {
+            else {
                 fishes[i] = fish_pacifists[i - fish_preys.Length - fish_predators.Length];
             }
         }
-        
     }
 
     void Update()
@@ -60,7 +52,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
             for (int i = 0; i < fishes.Length; i++) {
                 fishDat[i].position = fishes[i].position;
                 fishDat[i].direction = fishes[i].forward;
-                fishDat[i].type = (int)fishes[i].type;
+                fishDat[i].type = (int) fishes[i].type;
                 if (fishes[i].type == FishType.predator)
                     fishDat[i].threat = 0;
                 else
@@ -109,13 +101,13 @@ public class GlobalPerceptionManager : MonoBehaviour {
         public float maxFear;
         public float threat; // 0 for prey 1 for predator
 
-    // eat
-    public Vector3 nearestPredatorPos;
-    public int eatenPreyNumber;
-    // mate
-    public Vector3 desiredMatePos;
-    public intention desiredMateIntention;
-    public Vector3 desiredMatesMatePos; // compare with self pos
+        // eat
+        public Vector3 nearestPredatorPos;
+        public int eatenPreyNumber;
+        // mate
+        public Vector3 desiredMatePos;
+        public intention desiredMateIntention;
+        public Vector3 desiredMatesMatePos; // compare with self pos
 
         public static int Size // NOTE when you changed the buffer content also change the size
         {

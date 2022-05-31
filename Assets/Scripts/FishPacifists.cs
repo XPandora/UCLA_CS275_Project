@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 // 1. different sex
-// 2. 
+// 2.
 
 public class FishPacifists : FishBase {
     public void Initialize(FishSettings settings, Transform target)
@@ -14,7 +14,7 @@ public class FishPacifists : FishBase {
         this.type = FishType.pacifist;
         this.size_alpha = 1.0f;
         this.sex = FishSex.NA;
-        
+
         position = cachedTransform.position;
         forward = cachedTransform.forward;
 
@@ -31,9 +31,10 @@ public class FishPacifists : FishBase {
 
     intention GenerateIntentioBasedOnHabit()
     {
-        if (H > settings.r){
+        if (H > settings.r) {
             return intention.eat;
-        }else{
+        }
+        else {
             return intention.mate;
         }
     }

@@ -10,7 +10,7 @@ public class FishPredator : FishBase {
         this.settings = settings;
         this.type = FishType.predator;
         this.size_alpha = 2.0f;
-        
+
         position = cachedTransform.position;
         forward = cachedTransform.forward;
 
@@ -27,9 +27,10 @@ public class FishPredator : FishBase {
 
     intention GenerateIntentioBasedOnHabit()
     {
-        if (H > settings.r){
+        if (H > settings.r) {
             return intention.eat;
-        }else{
+        }
+        else {
             return intention.wander;
         }
     }
