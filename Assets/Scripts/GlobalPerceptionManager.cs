@@ -57,7 +57,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
                     fishDat[i].threat = 1;
                 else
                     fishDat[i].threat = 0;
-                
+
                 fishDat[i].intention = (int) fishes[i].It;
                 fishDat[i].fishSex = (int) fishes[i].sex;
                 fishDat[i].size = fishes[i].size;

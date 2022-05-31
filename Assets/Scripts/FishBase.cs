@@ -282,10 +282,28 @@ public class FishBase : MonoBehaviour {
     {
         // desired female determined by dist
         // once find a target, remember it (for recovery from avoid), this remember is cancled until mating is finished
-        // case 1: far away from female, chase (use steer)
-        // case 2: middle range from female 1. if female target not mating or target is not self->looping and wait 2. else approach
-        // if very close, consider it as successful mating; reset timmer and L
-        return SteerTowards(position - focusser_pos);
+        Vector3 acceleration = Vector3.zero;
+        Vector3 offset = focusser_pos - position;
+        float dist = offset.magnitude;
+        if(dist > settings.looping_dist){
+            // case 1: far away from female, chase (use steer)
+            acceleration = SteerTowards(offset);
+        }
+        else if(dist > settings.touching_dist){
+            // case 2: middle range from female 1. if female target not mating or target is not self->looping and wait 2. else approach
+            if(correct_like && desiredMateIntention == intention.mate){
+                acceleration = SteerTowards(offset);
+            }
+            else{
+                acceleration = Looping(focusser_pos);
+            }
+        }
+        else{
+            // if very close, consider it as successful mating; reset timmer and L
+            acceleration = SteerTowards(offset);
+            deltaTL /= 2;
+        }
+        return acceleration;
     }
 
     Vector3 FemaleMating(Vector3 focusser_pos)
@@ -293,14 +311,38 @@ public class FishBase : MonoBehaviour {
         // desired male determined by size
         // all cases: approach the desired male (but slower than male)
         // if very close, consider it as successful mating; reset timmer and L
-        return SteerTowards(position - focusser_pos);
+        Vector3 acceleration = Vector3.zero;
+        Vector3 offset = focusser_pos - position;
+        float dist = offset.magnitude;
+        acceleration = SteerTowards(offset);
+        if(dist < settings.touching_dist){
+            // if very close, consider it as successful mating; reset timmer and L
+            deltaTL /= 2;
+        }
+        return acceleration;
     }
 
     Vector3 Leaving(Vector3 focusser_pos)
     {
         // triggered when mating is finished
         // use opposite direction to its current mating target as steer
-        return SteerTowards(position - focusser_pos);
+        deltaTL = 0;
+        return SteerTowards(position - focusser_pos) * 10f;
+    }
+
+    Vector3 Mating(Vector3 focusser_pos)
+    {
+        if(L > settings.r){
+            if(sex == FishSex.male){
+                return MaleMating(focusser_pos);
+            }
+            else{
+                return FemaleMating(focusser_pos);
+            }
+        }
+        else{
+            return Leaving(focusser_pos);
+        }
     }
 
     // TODO add more wrappers
