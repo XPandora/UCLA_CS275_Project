@@ -12,8 +12,8 @@ public class FishPacifists : FishBase {
         this.target = target;
         this.settings = settings;
         this.type = FishType.pacifist;
-        this.size_alpha = 1.0f;
-        this.sex = FishSex.NA;
+        this.size = 1.0f;
+        // this.sex = FishSex.NA;
 
         position = cachedTransform.position;
         forward = cachedTransform.forward;

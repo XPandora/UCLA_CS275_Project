@@ -57,6 +57,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
                     fishDat[i].threat = 0;
                 else
                     fishDat[i].threat = 1;
+                
+                fishDat[i].intention = (int) fishes[i].It;
+                fishDat[i].fishSex = (int) fishes[i].sex;
+                fishDat[i].size = fishes[i].size;
+                fishDat[i].desiredMateID = (int) fishes[i].desiredMateID;
             }
             // copied data to compute shader buffer
             var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
@@ -81,6 +86,11 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].Fmax = fishDat[i].maxFear;
 
                 fishes[i].nearestPredatorPos = fishDat[i].nearestPredatorPos;
+
+                fishes[i].correct_like = fishDat[i].correct_like;
+                fishes[i].desiredMateID = fishDat[i].desiredMateID;
+                fishes[i].desiredMateIntention = (intention) fishDat[i].desiredMateIntention;
+                fishes[i].desiredMatePos = fishDat[i].desiredMatePos;
             }
 
             fishDatBuffer.Release();
@@ -104,16 +114,22 @@ public class GlobalPerceptionManager : MonoBehaviour {
         // eat
         public Vector3 nearestPredatorPos;
         public int eatenPreyNumber;
+
         // mate
+        public int intention;
+        public int fishSex;
+        public float size;
+        public int correct_like;
+
+        public int desiredMateID;
         public Vector3 desiredMatePos;
-        public intention desiredMateIntention;
-        public Vector3 desiredMatesMatePos; // compare with self pos
+        public int desiredMateIntention;
 
         public static int Size // NOTE when you changed the buffer content also change the size
         {
             get
             {
-                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3 + 3 * sizeof(float) * 3 + sizeof(int) + sizeof(intention);
+                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3 + 2 * sizeof(float) * 3 + 6 * sizeof(int) + sizeof(float);
             }
         }
     }

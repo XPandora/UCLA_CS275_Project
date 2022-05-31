@@ -19,10 +19,14 @@ struct FishDataBuffer {
     float3 nearestPredatorPos;
     int eatenPreyNumber;
     // mate
+    int intention;
+    int fishSex;
+    float size;
+    int correct_like;
+
+    int desiredMateID;
     float3 desiredMatePos;
     int desiredMateIntention;
-    float3 desiredMatesMatePos; // compare with self pos
-
 };
 
 RWStructuredBuffer<FishDataBuffer> fishDatBuffer;
@@ -36,6 +40,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 {
     float tmpMaxThreat = 0;
     float tempNearestDistSqr = 1000000000.0;
+
+
+    int tempDesiredID = -1;
+    float tempNearestDistMateSqr = 1000000000.0;
+    float tempNearLargestMaleMateSize = 0;
+    fishDatBuffer[id.x].correct_like = 0;
+
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
@@ -88,11 +99,40 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                     // only have interest on pacifist neighbor
                     if (neighbor_type == 2)
                     {
-                        // TODO: update focusser info
+                        // only look for different sex
+                        if(fishDatBuffer[id.x].fishSex != fishDatBuffer[idxNeighbor].fishSex){
+                            if(fishDatBuffer[id.x].fishSex == 0){
+                                // male
+                                if(sqrDst < tempNearestDistMateSqr){
+                                    tempNearestDistMateSqr = sqrDst;
+                                    tempDesiredID = idxNeighbor;
+                                    fishDatBuffer[id.x].desiredMatePos = fishDatBuffer[idxNeighbor].position;
+                                    fishDatBuffer[id.x].desiredMateIntention = fishDatBuffer[idxNeighbor].intention;
+                                    if(id.x == fishDatBuffer[idxNeighbor].desiredMateID)
+                                        fishDatBuffer[id.x].correct_like = 1;
+                                    else
+                                        fishDatBuffer[id.x].correct_like = 0;
+                                }
+                            }
+                            else{
+                                // female
+                                if(fishDatBuffer[idxNeighbor].size > tempNearLargestMaleMateSize){
+                                    tempNearLargestMaleMateSize = fishDatBuffer[idxNeighbor].size;
+                                    tempDesiredID = idxNeighbor;
+                                    fishDatBuffer[id.x].desiredMatePos = fishDatBuffer[idxNeighbor].position;
+                                    fishDatBuffer[id.x].desiredMateIntention = fishDatBuffer[idxNeighbor].intention;
+                                    if(id.x == fishDatBuffer[idxNeighbor].desiredMateID)
+                                        fishDatBuffer[id.x].correct_like = 1;
+                                    else
+                                        fishDatBuffer[id.x].correct_like = 0;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
     fishDatBuffer[id.x].maxFear = tmpMaxThreat;
+    fishDatBuffer[id.x].desiredMateID = tempDesiredID;
 }

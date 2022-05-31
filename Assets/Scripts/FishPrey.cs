@@ -10,7 +10,7 @@ public class FishPrey : FishBase {
         this.target = target;
         this.settings = settings;
         this.type = FishType.prey;
-        this.size_alpha = 0.5f;
+        this.size = 0.5f;
 
         position = cachedTransform.position;
         forward = cachedTransform.forward;
