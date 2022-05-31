@@ -34,6 +34,7 @@ int numFishes;
 float viewRadius;
 float flockRadius;
 float avoidRadius;
+float canEatRange;
 
 [numthreads(threadGroupSize,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
@@ -41,7 +42,6 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     float D0 = 1000000;
     float tmpMaxThreat = 0;
     float tempNearestDistSqr = 1000000000.0;
-
 
     int tempDesiredID = -1;
     float tempNearestDistMateSqr = 1000000000.0;
@@ -93,6 +93,10 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                     if (neighbor_type == 0)
                     {
                         // TODO: if very very close, eatenPreyNumber++
+                        if(sqrDst < canEatRange * canEatRange){
+                            fishDatBuffer[id.x].eatenPreyNumber += 1;
+                        }
+                        
                     }
                 }
                 else // pacifist

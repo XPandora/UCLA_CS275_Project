@@ -71,6 +71,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
             compute.SetFloat("viewRadius", settings.perceptionRadius);
             compute.SetFloat("flockRadius", settings.flockRadius);
             compute.SetFloat("avoidRadius", settings.avoidanceRadius);
+            compute.SetFloat("canEatRange", settings.canEatRange);
 
             int threadGroups = Mathf.CeilToInt(numFishes / (float) threadGroupSize);
             compute.Dispatch(0, threadGroups, 1, 1);

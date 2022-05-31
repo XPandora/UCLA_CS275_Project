@@ -17,6 +17,8 @@ public class FishSettings : ScriptableObject {
     public float seperateWeight = 1;
 
     public float targetWeight = 1;
+    public float steerEatRange = 100;
+    public float canEatRange = 2;
 
     [Header("Collisions")]
     public LayerMask obstacleMask;
