@@ -280,6 +280,7 @@ public class FishBase : MonoBehaviour {
     {
         // triggered when mating is finished
         // use opposite direction to its current mating target as steer
+        return SteerTowards(position - focusser_pos);
     }
 
 
