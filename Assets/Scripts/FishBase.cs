@@ -44,6 +44,7 @@ public class FishBase : MonoBehaviour {
     // eat
     public Vector3 nearestPredatorPos;
     public int eatenPreyNumber;
+    public float nearestPredatorDistance;
     // mate
     public int correct_like;
     public int desiredMateID;
@@ -127,7 +128,7 @@ public class FishBase : MonoBehaviour {
 
              // now judge if prey is being caught by a predator
             // TODO consider when to judge and destroy this prey
-            float nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
+            nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
             //Debug.Log(nearestPredatorDistance);
             if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey){
                 Debug.Log("in Drag");
@@ -156,7 +157,7 @@ public class FishBase : MonoBehaviour {
 
         // now judge if prey is being caught by a predator
         // TODO consider when to judge and destroy this prey
-        float nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
+        nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
         //Debug.Log(nearestPredatorDistance);
         if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey) {
             Debug.Log("in Drag");
