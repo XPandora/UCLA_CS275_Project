@@ -138,7 +138,7 @@ public class FishBase : MonoBehaviour {
             
             if(nearestPredatorDistance < settings.canEatRange && type == FishType.prey){
                 Debug.Log("in destory");
-                //Destroy(gameObject);
+                Destroy(gameObject);
             }
             break;
         case intention.school:
