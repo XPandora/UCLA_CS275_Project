@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// 1. different sex
+// 2. 
+
 public class FishPacifists : FishBase {
     public void Initialize(FishSettings settings, Transform target)
     {
         this.target = target;
         this.settings = settings;
         this.type = FishType.pacifist;
+        this.size_alpha = 1.0f;
+        this.sex = FishSex.NA;
         
         position = cachedTransform.position;
         forward = cachedTransform.forward;
@@ -19,7 +24,7 @@ public class FishPacifists : FishBase {
 
     void UpdateMentalStates()
     {
-        H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / settings.appetite, 1);
+        H = 0;
         L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
         F = 0;
     }

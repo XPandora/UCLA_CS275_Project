@@ -17,6 +17,12 @@ public enum FishType {
     pacifist=2
 }
 
+public enum FishSex {
+    NA=0,
+    MALE=1,
+    FEMALE=2
+}
+
 public class FishBase : MonoBehaviour {
 
     public FishSettings settings;
@@ -32,6 +38,17 @@ public class FishBase : MonoBehaviour {
     public float deltaTH, deltaTL, foodConsumed;
     public List<intention> memories;
     public intention It; // current intention
+    public float size_alpha;
+    public FishSex sex;
+
+    // eat
+    public Vector3 nearestPredatorPos;
+    public int eatenPreyNumber;
+    // mate
+    public Vector3 desiredMatePos;
+    public intention desiredMateIntention;
+    public Vector3 desiredMatesMatePos; // compare with self pos
+
 
     // To update:
     public Vector3 acceleration;
@@ -86,7 +103,7 @@ public class FishBase : MonoBehaviour {
         
         // filtered the obtained information based on the intention
         FilterInfoByFocusser();
-        // choose a certain behavior sequence TODO
+        // choose a certain behavior sequence
         Vector3 acceleration = Vector3.zero;
         switch (It) {
         case intention.wander:
@@ -122,7 +139,10 @@ public class FishBase : MonoBehaviour {
         deltaTH += 1;
         deltaTL += 1;
 
-        // penalty for being out of the box
+        // now judge if prey is being caught by a predator
+        // TODO
+        // TODO consider when to judge and destroy this prey
+        // TODO consider how to set predator's foodConsumed = ?, deltaTH = 0
 
 
         // move
@@ -140,7 +160,7 @@ public class FishBase : MonoBehaviour {
 
     void UpdateMentalStates()
     {
-        H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / settings.appetite, 1);
+        H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / size_alpha, 1);
         L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
         F = Math.Min(F, 1);
     }

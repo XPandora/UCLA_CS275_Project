@@ -14,6 +14,15 @@ struct FishDataBuffer {
     float totFear;
     float maxFear;
     float threat; // 0 for prey 1 for predator
+
+     // eat
+    float3 nearestPredatorPos;
+    int eatenPreyNumber;
+    // mate
+    float3 desiredMatePos;
+    int desiredMateIntention;
+    float3 desiredMatesMatePos; // compare with self pos
+
 };
 
 RWStructuredBuffer<FishDataBuffer> fishDatBuffer;
@@ -26,6 +35,7 @@ float D0 = 100;
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     float tmpMaxThreat = 0;
+    float tempNearestDistSqr = 1000000000.0;
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
@@ -54,7 +64,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                         fishDatBuffer[id.x].totFear += neighbor.threat * D0 / sqrt(sqrDst);
                         tmpMaxThreat = max(tmpMaxThreat, neighbor.threat * D0 / sqrt(sqrDst));
 
+                        // get nearestPredatorPos
+                        if(sqrDst < tempNearestDistSqr){
+                            tempNearestDistSqr = sqrDst;
+                            fishDatBuffer[id.x].nearestPredatorPos = fishDatBuffer[idxNeighbor].position;
+                        }
                         // TODO: update focusser info
+                        // TODO: after loop neighbors, if tempNearestDistSqr is really small, self is eaten
                     }
 
                     // no interest on pacifist neighbor
@@ -64,7 +80,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                     // only have interest on prey neighbor
                     if (neighbor_type == 0)
                     {
-                        // TODO: update focusser info 
+                        // TODO: if very very close, eatenPreyNumber++
                     }
                 }
                 else // pacifist

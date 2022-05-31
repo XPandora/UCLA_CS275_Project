@@ -44,6 +44,10 @@ public class Spawner : MonoBehaviour {
             FishPacifists fish = Instantiate(pacifist_prefab);
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
+            if(i < pacifistSpawnCount/2)
+            fish.sex = FishSex.MALE;
+            else
+            fish.sex = FishSex.FEMALE;
 
             fish.SetColour(colour);
         }

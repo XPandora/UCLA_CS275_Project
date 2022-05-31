@@ -9,6 +9,7 @@ public class FishPredator : FishBase {
         this.target = target;
         this.settings = settings;
         this.type = FishType.predator;
+        this.size_alpha = 2.0f;
         
         position = cachedTransform.position;
         forward = cachedTransform.forward;
