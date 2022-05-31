@@ -124,6 +124,20 @@ public class FishBase : MonoBehaviour {
             // TODO : modify focusser_pos when focusser is completed
             Vector3 focusser_pos = nearestPredatorPos;
             acceleration = Escape(focusser_pos);
+
+             // now judge if prey is being caught by a predator
+            // TODO consider when to judge and destroy this prey
+            float nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
+            //Debug.Log(nearestPredatorDistance);
+            if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey){
+                Debug.Log("in Drag");
+                acceleration =  DragByPredator(nearestPredatorPos);
+            }
+            
+            if(nearestPredatorDistance < settings.canEatRange && type == FishType.prey){
+                Debug.Log("in destory");
+                //Destroy(gameObject);
+            }
             break;
         case intention.school:
             acceleration = Flock();
@@ -140,19 +154,6 @@ public class FishBase : MonoBehaviour {
         deltaTH += 1;
         deltaTL += 1;
 
-        // now judge if prey is being caught by a predator
-        // TODO consider when to judge and destroy this prey
-        float nearestPredatorDistance = Vector3.Distance(position, nearestPredatorPos);
-        //Debug.Log(nearestPredatorDistance);
-        if (nearestPredatorDistance < settings.steerEatRange && type == FishType.prey){
-            Debug.Log("in Drag");
-            acceleration =  DragByPredator(nearestPredatorPos);
-        }
-        
-        if(nearestPredatorDistance < settings.canEatRange && type == FishType.prey){
-            Debug.Log("in destory");
-            //Destroy(gameObject);
-        }
         // TODO consider how to set predator's foodConsumed = ?, deltaTH = 0
 
         // move

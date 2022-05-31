@@ -53,10 +53,6 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishDat[i].position = fishes[i].position;
                 fishDat[i].direction = fishes[i].forward;
                 fishDat[i].type = (int) fishes[i].type;
-                if (fishes[i].type == FishType.predator)
-                    fishDat[i].threat = 1;
-                else
-                    fishDat[i].threat = 0;
 
                 fishDat[i].intention = (int) fishes[i].It;
                 fishDat[i].fishSex = (int) fishes[i].sex;
@@ -112,7 +108,6 @@ public class GlobalPerceptionManager : MonoBehaviour {
 
         public float totFear;
         public float maxFear;
-        public float threat; // 0 for prey 1 for predator
 
         // eat
         public Vector3 nearestPredatorPos;
@@ -133,7 +128,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
         {
             get
             {
-                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3 + 3 * sizeof(float) * 3 + 6 * sizeof(int) + sizeof(float);
+                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 2 + 3 * sizeof(float) * 3 + 6 * sizeof(int) + sizeof(float);
             }
         }
     }
