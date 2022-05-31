@@ -54,9 +54,9 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishDat[i].direction = fishes[i].forward;
                 fishDat[i].type = (int) fishes[i].type;
                 if (fishes[i].type == FishType.predator)
-                    fishDat[i].threat = 0;
-                else
                     fishDat[i].threat = 1;
+                else
+                    fishDat[i].threat = 0;
             }
             // copied data to compute shader buffer
             var fishDatBuffer = new ComputeBuffer(numFishes, FishDataBuffer.Size);
@@ -64,6 +64,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
             compute.SetBuffer(0, "fishDatBuffer", fishDatBuffer);
             compute.SetInt("numFishes", fishes.Length);
             compute.SetFloat("viewRadius", settings.perceptionRadius);
+            compute.SetFloat("flockRadius", settings.flockRadius);
             compute.SetFloat("avoidRadius", settings.avoidanceRadius);
 
             int threadGroups = Mathf.CeilToInt(numFishes / (float) threadGroupSize);

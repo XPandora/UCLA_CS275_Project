@@ -121,7 +121,7 @@ public class FishBase : MonoBehaviour {
         //     break;
         case intention.escape:
             // TODO : modify focusser_pos when focusser is completed
-            Vector3 focusser_pos = UnityEngine.Random.insideUnitSphere;
+            Vector3 focusser_pos = nearestPredatorPos;
             acceleration = Escape(focusser_pos);
             break;
         case intention.school:
@@ -157,7 +157,7 @@ public class FishBase : MonoBehaviour {
         forward = dir;
     }
 
-    void UpdateMentalStates()
+    public virtual void UpdateMentalStates()
     {
         H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / size_alpha, 1);
         L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
@@ -181,6 +181,7 @@ public class FishBase : MonoBehaviour {
             if (F > settings.f0) {
                 if (Fmax > settings.f1) {
                     It = intention.escape;
+                    Debug.Log(type);
                 }
                 else {
                     It = intention.school;
@@ -204,7 +205,7 @@ public class FishBase : MonoBehaviour {
         }
     }
 
-    intention GenerateIntentioBasedOnHabit()
+    public virtual intention GenerateIntentioBasedOnHabit()
     {
         // NOTE be overloaded in different fishes
         return intention.wander;
@@ -274,7 +275,7 @@ public class FishBase : MonoBehaviour {
 
     Vector3 Escape(Vector3 focusser_pos)
     {
-        return SteerTowards(position - focusser_pos);
+        return SteerTowards(position - focusser_pos) * 10f;
     }
 
     Vector3 MaleMating(Vector3 focusser_pos)
