@@ -26,6 +26,7 @@ struct FishDataBuffer {
 
     int desiredMateID;
     float3 desiredMatePos;
+    float3 desiredMateDir;
     int desiredMateIntention;
 };
 
@@ -112,6 +113,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                                     tempNearestDistMateSqr = sqrDst;
                                     tempDesiredID = idxNeighbor;
                                     fishDatBuffer[id.x].desiredMatePos = fishDatBuffer[idxNeighbor].position;
+                                    fishDatBuffer[id.x].desiredMateDir = fishDatBuffer[idxNeighbor].direction;
                                     fishDatBuffer[id.x].desiredMateIntention = fishDatBuffer[idxNeighbor].intention;
                                     if(id.x == fishDatBuffer[idxNeighbor].desiredMateID)
                                         fishDatBuffer[id.x].correct_like = 1;
@@ -125,6 +127,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
                                     tempNearLargestMaleMateSize = fishDatBuffer[idxNeighbor].size;
                                     tempDesiredID = idxNeighbor;
                                     fishDatBuffer[id.x].desiredMatePos = fishDatBuffer[idxNeighbor].position;
+                                    fishDatBuffer[id.x].desiredMateDir = fishDatBuffer[idxNeighbor].direction;
                                     fishDatBuffer[id.x].desiredMateIntention = fishDatBuffer[idxNeighbor].intention;
                                     if(id.x == fishDatBuffer[idxNeighbor].desiredMateID)
                                         fishDatBuffer[id.x].correct_like = 1;
