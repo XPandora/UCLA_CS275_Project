@@ -16,6 +16,13 @@ public class FishPacifists : FishBase {
         velocity = transform.forward * startSpeed;
     }
 
+    void UpdateMentalStates()
+    {
+        H = Math.Min(1 - foodConsumed * (1 - settings.digestionRate * deltaTH) / settings.appetite, 1);
+        L = Math.Min(settings.libidoRate * deltaTL * (1 - H), 1);
+        F = 0;
+    }
+
     intention GenerateIntentioBasedOnHabit()
     {
         if (H > settings.r){

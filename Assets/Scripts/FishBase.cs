@@ -147,9 +147,8 @@ public class FishBase : MonoBehaviour {
 
     void IntentionGenerator()
     {
-        // NOTE look at the figure 5.
         intention ItMinus = It; // backup It at last step
-        bool avoid = IsHeadingForCollision(); // TODO refine the avoid check here
+        bool avoid = IsHeadingForCollision();
         if (avoid) {
             It = intention.avoid;
             if (ItMinus != intention.avoid) {
@@ -242,6 +241,12 @@ public class FishBase : MonoBehaviour {
         return acceleration;
     }
 
+    Vector3 Looping(Vector3 focusser_pos)
+    {
+        // TODO: circulate around the target, the acceleration is produced by cross product
+        return SteerTowards(position - focusser_pos);
+    }
+
     // Wrappers for behaviour sequences
     Vector3 DefaultBoidWander()
     {
@@ -252,6 +257,32 @@ public class FishBase : MonoBehaviour {
     {
         return SteerTowards(position - focusser_pos);
     }
+
+    Vector3 MaleMating(Vector3 focusser_pos)
+    {
+        // desired female determined by dist
+        // once find a target, remember it (for recovery from avoid), this remember is cancled until mating is finished
+        // case 1: far away from female, chase (use steer)
+        // case 2: middle range from female 1. if female target not mating or target is not self->looping and wait 2. else approach
+        // if very close, consider it as successful mating; reset timmer and L
+        return SteerTowards(position - focusser_pos);
+    }
+
+    Vector3 FemaleMating(Vector3 focusser_pos)
+    {
+        // desired male determined by size
+        // all cases: approach the desired male (but slower than male)
+        // if very close, consider it as successful mating; reset timmer and L
+        return SteerTowards(position - focusser_pos);
+    }
+
+    Vector3 Leaving(Vector3 focusser_pos)
+    {
+        // triggered when mating is finished
+        // use opposite direction to its current mating target as steer
+    }
+
+
     // TODO add more wrappers
 
     // Other helpers

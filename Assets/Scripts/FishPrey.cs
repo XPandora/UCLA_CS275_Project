@@ -17,6 +17,13 @@ public class FishPrey : FishBase {
         velocity = transform.forward * startSpeed;
     }
 
+    void UpdateMentalStates()
+    {
+        H = 0;
+        L = 0;
+        F = Math.Min(F, 1);
+    }
+
     intention GenerateIntentioBasedOnHabit()
     {
         if (H > settings.r)
