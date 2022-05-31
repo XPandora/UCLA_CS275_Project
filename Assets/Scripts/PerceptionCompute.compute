@@ -13,9 +13,8 @@ struct FishDataBuffer {
 
     float totFear;
     float maxFear;
-    float threat; // 0 for prey 1 for predator
 
-     // eat
+    // eat
     float3 nearestPredatorPos;
     int eatenPreyNumber;
     // mate

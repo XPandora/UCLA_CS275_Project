@@ -119,6 +119,7 @@ public class FishBase : MonoBehaviour {
         //     acceleration = DefaultBoidWander();
         //     break;
         case intention.mate: // NOTE: remember to reset the and the deltaTL
+            Debug.Log(It);
             acceleration = Mating(desiredMatePos);
             break;
         case intention.escape:
