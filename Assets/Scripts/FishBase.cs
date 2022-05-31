@@ -312,7 +312,9 @@ public class FishBase : MonoBehaviour {
         }
         else if(dist > settings.touching_dist){
             // case 2: middle range from female 1. if female target not mating or target is not self->looping and wait 2. else approach
-            if(correct_like && desiredMateIntention == intention.mate){
+            // Tim Line316 correct_like is int can not && with bool
+            // Not sure is it correct to be correct_like == 0
+            if(correct_like == 0 && (desiredMateIntention == intention.mate)){
                 acceleration = SteerTowards(offset);
             }
             else{
@@ -354,7 +356,7 @@ public class FishBase : MonoBehaviour {
     Vector3 Mating(Vector3 focusser_pos)
     {
         if(L > settings.r){
-            if(sex == FishSex.male){
+            if(sex == FishSex.MALE){
                 return MaleMating(focusser_pos);
             }
             else{

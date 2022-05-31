@@ -40,6 +40,6 @@ public class FishSettings : ScriptableObject {
 
     [Header("Mating Consts")]
     public float looping_dist = 3f;
-    public float touching_dist = 1.5;
+    public float touching_dist = 1.5f;
     public float roundingWeight = 1;
 }
