@@ -48,6 +48,7 @@ public class FishBase : MonoBehaviour {
     public int correct_like;
     public int desiredMateID;
     public Vector3 desiredMatePos;
+    public Vector3 desiredMateDir;
     public intention desiredMateIntention;
 
     // To update:
@@ -116,9 +117,9 @@ public class FishBase : MonoBehaviour {
         // case intention.eat: // NOTE: remember to reset the food consumed, and the deltaTH
         //     acceleration = DefaultBoidWander();
         //     break;
-        // case intention.mate: // NOTE: remember to reset the and the deltaTL
-        //     acceleration = DefaultBoidWander();
-        //     break;
+        case intention.mate: // NOTE: remember to reset the and the deltaTL
+            acceleration = Mating(desiredMatePos);
+            break;
         case intention.escape:
             // TODO : modify focusser_pos when focusser is completed
             Vector3 focusser_pos = nearestPredatorPos;
@@ -263,7 +264,11 @@ public class FishBase : MonoBehaviour {
 
     Vector3 Looping(Vector3 focusser_pos)
     {
-        // TODO: circulate around the target, the acceleration is produced by cross product
+        Vector3 acceleration = Vector3.zero;
+        Vector3 offset = focusser_pos - position;
+        acceleration += SteerTowards(desiredMateDir) * settings.alignWeight;
+        acceleration += SteerTowards(offset) * settings.cohesionWeight;
+        acceleration += Vector3.Cross(offset, velocity).normalized * settings.roundingWeight;
         return SteerTowards(position - focusser_pos);
     }
 

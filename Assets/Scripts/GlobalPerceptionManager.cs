@@ -91,6 +91,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
                 fishes[i].correct_like = fishDat[i].correct_like;
                 fishes[i].desiredMateID = fishDat[i].desiredMateID;
                 fishes[i].desiredMateIntention = (intention) fishDat[i].desiredMateIntention;
+                fishes[i].desiredMateDir = fishDat[i].desiredMateDir;
                 fishes[i].desiredMatePos = fishDat[i].desiredMatePos;
             }
 
@@ -124,13 +125,14 @@ public class GlobalPerceptionManager : MonoBehaviour {
 
         public int desiredMateID;
         public Vector3 desiredMatePos;
+        public Vector3 desiredMateDir;
         public int desiredMateIntention;
 
         public static int Size // NOTE when you changed the buffer content also change the size
         {
             get
             {
-                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3 + 2 * sizeof(float) * 3 + 6 * sizeof(int) + sizeof(float);
+                return sizeof(int) + sizeof(float) * 3 * 5 + sizeof(int) + sizeof(float) * 3 + 3 * sizeof(float) * 3 + 6 * sizeof(int) + sizeof(float);
             }
         }
     }
