@@ -128,7 +128,7 @@ public class GlobalPerceptionManager : MonoBehaviour {
         {
             get
             {
-                return sizeof(int)*8 + sizeof(float) * 3 + sizeof(float)*3*8;
+                return sizeof(int) * 8 + sizeof(float) * 3 + sizeof(float) * 3 * 8;
             }
         }
     }
