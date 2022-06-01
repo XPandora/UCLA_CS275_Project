@@ -99,9 +99,16 @@ public class FishBase : MonoBehaviour {
         // case intention.eat: // NOTE: remember to reset the food consumed, and the deltaTH
         //     acceleration = DefaultBoidWander();
         //     break;
+<<<<<<< Updated upstream
         // case intention.mate: // NOTE: remember to reset the and the deltaTL
         //     acceleration = DefaultBoidWander();
         //     break;
+=======
+        //case intention.mate: // NOTE: remember to reset the and the deltaTL
+        //    Debug.Log(It);
+        //    acceleration = Mating(desiredMatePos);
+        //    break;
+>>>>>>> Stashed changes
         case intention.escape:
             // TODO : modify focusser_pos when focusser is completed
             Vector3 focusser_pos = UnityEngine.Random.insideUnitSphere;

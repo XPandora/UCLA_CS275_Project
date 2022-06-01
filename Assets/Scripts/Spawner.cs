@@ -26,8 +26,11 @@ public class Spawner : MonoBehaviour {
             FishPrey fish = Instantiate(prey_prefab);
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
+<<<<<<< Updated upstream
 
             fish.SetColour(colour);
+=======
+>>>>>>> Stashed changes
         }
 
         for (int i = 0; i < predatorSpawnCount; i++) {
