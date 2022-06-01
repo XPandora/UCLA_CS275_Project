@@ -27,7 +27,6 @@ public class Spawner : MonoBehaviour {
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
 
-            fish.SetColour(colour);
         }
 
         for (int i = 0; i < predatorSpawnCount; i++) {
@@ -36,7 +35,6 @@ public class Spawner : MonoBehaviour {
             fish.transform.position = pos;
             fish.transform.forward = Random.insideUnitSphere;
 
-            fish.SetColour(colour);
         }
 
         for (int i = 0; i < pacifistSpawnCount; i++) {
@@ -49,7 +47,6 @@ public class Spawner : MonoBehaviour {
             else
                 fish.sex = FishSex.FEMALE;
 
-            fish.SetColour(colour);
         }
     }
 

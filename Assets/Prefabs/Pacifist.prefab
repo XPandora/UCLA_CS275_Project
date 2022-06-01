@@ -59,12 +59,22 @@ MonoBehaviour:
   foodConsumed: 0
   memories: 
   It: 0
+  size: 0
+  sex: 0
+  nearestPredatorPos: {x: 0, y: 0, z: 0}
+  eatenPreyNumber: 0
+  nearestPredatorDistance: 0
+  correct_like: 0
+  desiredMateID: 0
+  desiredMatePos: {x: 0, y: 0, z: 0}
+  desiredMateDir: {x: 0, y: 0, z: 0}
+  desiredMateIntention: 0
   acceleration: {x: 0, y: 0, z: 0}
   avgFlockHeading: {x: 0, y: 0, z: 0}
   avgAvoidanceHeading: {x: 0, y: 0, z: 0}
   centreOfFlockmates: {x: 0, y: 0, z: 0}
   numPerceivedFlockmates: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: aed7bbe05b193ef479c15b535b6aaa78, type: 2}
   cachedTransform: {fileID: 0}
   target: {fileID: 0}
 --- !u!1001 &1422585266430995458
