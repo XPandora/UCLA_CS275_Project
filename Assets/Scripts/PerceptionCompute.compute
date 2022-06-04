@@ -49,15 +49,17 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     fishDatBuffer[id.x].correct_like = 0;
 
     for (int idxNeighbor = 0; idxNeighbor < numFishes; idxNeighbor ++) {
+        float3 dir = normalize(fishDatBuffer[id.x].direction);
         if (id.x != idxNeighbor) {
             FishDataBuffer neighbor = fishDatBuffer[idxNeighbor];
             int neighbor_type = neighbor.type;
             
             float3 offset = neighbor.position - fishDatBuffer[id.x].position;
             float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z;
+            float cos_value = dot(normalize(offset), dir);
 
             // assume all fish types share same view radius and avoid raduis for temporary use
-            if (sqrDst < viewRadius * viewRadius) {
+            if (sqrDst < viewRadius * viewRadius && cos_value > -0.866) {
                 if (fishDatBuffer[id.x].type == 0) // prey
                 {
                     if (neighbor_type == 0 && sqrDst < flockRadius * flockRadius) // prey neighbor
